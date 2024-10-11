@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fd!-o8gc1dt3_e)3i*m52y-3-(j(r)d6w66^$$9=3#iy!$194)'
+SECRET_KEY = 'django-insecure-!zat*w0h-rdej2kj4@8nub=)5b)8)3+b**2t#*e6=jc6$a65oh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'GestionDeBlog',
+    'import_export',
+    'ckeditor',
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,7 +65,7 @@ ROOT_URLCONF = 'Blog_Online.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,11 +110,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Configuracion de CKEDITOR
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    },
+}
+
+AUTH_USER_MODEL ='GestionDeBlog.Usuario'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -117,7 +137,23 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Variables de Entorno LOGIN Y LOGOUT
+
+LOGIN_REDIRECT_URL = 'inicio'
+
+LOGOUT_REDIRECT_URL = 'inicio'
+
+# Variables para envio de correo
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'ablog559@gmail.com'
+EMAIL_HOST_PASSWORD = 'adminblog559'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
