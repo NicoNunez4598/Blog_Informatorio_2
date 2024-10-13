@@ -43,6 +43,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th> # </th>
+                            <th> Username </th>
                             <th> Nombres </th>
                             <th> Apellidos </th>
                             <th> Correo Electronico </th>
@@ -53,11 +54,12 @@
                         {% for u in usuarioslistados %}
                             <tr class="tr-tbody">
                                 <td> {{forloop.counter}} </td>
+                                <td> {{u.username}} </td>
                                 <td> {{u.first_name}} </td>
                                 <td> {{u.last_name}} </td>
                                 <td> {{u.email}} </td>
-                                <td><a href="edicionautor/{{ u.username }}"> <button class="btn btn-info"> Editar </button> </a></td>
-                                <td><a href="eliminarautor/{{ u.username }}"> <button class="btn btn-danger btnEliminar"> Eliminar </button> </a></td>
+                                <td><a href="edicionusuario/{{ u.username }}"> <button class="btn btn-info"> Editar </button> </a></td>
+                                <td><a href="eliminarusuario/{{ u.username }}"> <button class="btn btn-danger btnEliminar"> Eliminar </button> </a></td>
                             </tr>
                         {% endfor %}
                     </tbody>

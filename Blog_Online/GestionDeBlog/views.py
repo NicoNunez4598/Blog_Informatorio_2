@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from .models import Categoria, Usuario
+from .models import Categoria, Usuario, Post
 from .forms import CustomUserCreationForm, CustomUserCreationForm2
 
 # Create your views here.
@@ -169,6 +169,45 @@ def registrarusuario(request):
         if user_creation_form_2.is_valid():
             user_creation_form_2.save()
     return render(request, 'registrarUsuario.html', data)
+
+def edicionusuario(request, username):
+
+    usuario = Usuario.objects.get(username=username)
+
+    return render(request, 'edicionUsuarios.html', {"usuario":usuario})
+
+def editarusuario(request):
+
+    username = request.POST['username']
+    first_name = request.POST['txtNombres']
+    last_name = request.POST['txtApellidos']
+    email = request.POST['email']
+
+    usuario = Usuario.objects.get(username=username)
+    usuario.first_name = first_name
+    usuario.last_name = last_name
+    usuario.email = email
+
+    usuario.save()
+
+    messages.success(request, 'Se ha editado con exito el usuario seleccionado')
+
+    return redirect('usuarios')
+
+def eliminarusuario(request, username):
+    
+    usuario = Usuario.objects.get(username=username)
+
+    usuario.delete()
+
+    messages.success(request, 'Se ha eliminado usuario seleccionado')
+
+    return redirect('usuarios')
+
+def posts(request):
+    postslistados = Post.objects.all()
+    categoriaslistadas = Categoria.objects.all()
+    return render(request, 'posts.html', {"postslistados" : postslistados, "categoriaslistadas" : categoriaslistadas})
 
 def register(request):
     data = {
