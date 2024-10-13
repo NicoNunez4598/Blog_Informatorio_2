@@ -8,8 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from .models import Categoria
-from .forms import CustomUserCreationForm
+from .models import Categoria, Usuario
+from .forms import CustomUserCreationForm, CustomUserCreationForm2
 
 # Create your views here.
 
@@ -155,6 +155,20 @@ def eliminarcategoria(request, id):
     messages.success(request, 'Se ha eliminado la categoria seleccionada')
 
     return redirect('categorias')
+
+def usuarios(request):
+    usuarioslistados = Usuario.objects.all()
+    return render(request, 'usuarios.html', {"usuarioslistados" : usuarioslistados})
+
+def registrarusuario(request):
+    data = {
+        'form' : CustomUserCreationForm2()
+    }
+    if request.method == 'POST':
+        user_creation_form_2 = CustomUserCreationForm2(data=request.POST)
+        if user_creation_form_2.is_valid():
+            user_creation_form_2.save()
+    return render(request, 'registrarUsuario.html', data)
 
 def register(request):
     data = {

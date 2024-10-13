@@ -9,12 +9,20 @@ class CategoriaResource(resources.ModelResource):
     class Meta:
         model = Categoria
 
+class UsuarioResource(resources.ModelResource):
+    class Meta:
+        model = Usuario
 
 class CategoriaAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = [ 'nombre' ]
     list_display = [ 'nombre', 'estado', 'fecha_creacion', ]
     resource_class = CategoriaResource
 
+class UsuarioAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    search_fields = [ 'first_name', 'last_name', 'email' ]
+    list_display = [ 'first_name', 'last_name', 'email', 'username', 'is_staff' ]
+    resource_class = UsuarioResource
 
 admin.site.register(Categoria, CategoriaAdmin)
+admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(Post)
