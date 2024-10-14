@@ -200,7 +200,7 @@ def eliminarusuario(request, username):
 
     usuario.delete()
 
-    messages.success(request, 'Se ha eliminado usuario seleccionado')
+    messages.success(request, 'Se ha eliminado el usuario seleccionado')
 
     return redirect('usuarios')
 
@@ -208,6 +208,55 @@ def posts(request):
     postslistados = Post.objects.all()
     categoriaslistadas = Categoria.objects.all()
     return render(request, 'posts.html', {"postslistados" : postslistados, "categoriaslistadas" : categoriaslistadas})
+
+def registrarpost(request):
+
+    nombre=request.POST['txtNombre']
+    estado=True
+
+    categoria = Categoria.objects.create(nombre=nombre, estado=estado)
+
+    messages.success(request, 'Se ha registrado una categoria')
+
+    return redirect('categorias')
+
+def edicionpost(request, id):
+
+    post = Post.objects.get(id=id)
+
+    return render(request, 'edicionPost.html', {"post":post})
+
+def editarpost(request):
+
+    id = request.POST['numberid']
+    titulo = request.POST['txtTitulo']
+    slug = request.POST['txtSlug']
+    descripcion = request.POST['txtDescripcion']
+    contenido = request.POST['txtContenido']
+    imagen = request.POST['txtImagen']
+
+    post = Post.objects.get(id=id)
+    post.titulo = titulo
+    post.slug = slug
+    post.descripcion = descripcion
+    post.contenido = contenido
+    post.imagen = imagen
+
+    post.save()
+
+    messages.success(request, 'Se ha editado con exito el post seleccionado')
+
+    return redirect('posts')
+
+def eliminarpost(request, id):
+    
+    post = Post.objects.get(id=id)
+
+    post.delete()
+
+    messages.success(request, 'Se ha eliminado el post seleccionado')
+
+    return redirect('posts')
 
 def register(request):
     data = {
