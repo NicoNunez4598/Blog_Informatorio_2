@@ -205,20 +205,30 @@ def eliminarusuario(request, username):
     return redirect('usuarios')
 
 def posts(request):
-    postslistados = Post.objects.all()
+    if request.user.is_superuser:
+        postslistados = Post.objects.all()
+    elif request.user.is_authenticated:
+        postslistados = Post.objects.filter(autor=request.user) 
     categoriaslistadas = Categoria.objects.all()
     return render(request, 'posts.html', {"postslistados" : postslistados, "categoriaslistadas" : categoriaslistadas})
 
 def registrarpost(request):
 
-    nombre=request.POST['txtNombre']
-    estado=True
+    titulo = request.POST['txtTitulo']
+    slug = request.POST['txtSlug']
+    descripcion = request.POST['txtDescripcion']
+    contenido = request.POST['txtContenido']
+    imagen = request.POST['txtImagen']
+    autor = request.user
+    categoria = request.POST['categoria']
+    categoria = Categoria.objects.get(id=categoria)
+    estado = True
 
-    categoria = Categoria.objects.create(nombre=nombre, estado=estado)
+    post = Post.objects.create(titulo=titulo, slug=slug, descripcion=descripcion, contenido=contenido, imagen=imagen, autor= autor, categoria=categoria, estado=estado)
 
-    messages.success(request, 'Se ha registrado una categoria')
+    messages.success(request, 'Se ha registrado un post')
 
-    return redirect('categorias')
+    return redirect('posts')
 
 def edicionpost(request, id):
 

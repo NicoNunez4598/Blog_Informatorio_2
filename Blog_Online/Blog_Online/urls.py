@@ -36,6 +36,7 @@ urlpatterns = [
     path('Usuarios/eliminarusuario/<username>', views.eliminarusuario, name="eliminarusuario"),
     path('editarusuario/', views.editarusuario, name="editarusuario"),
     path('Posts/', views.posts, name="posts"),
+    path('registrarpost/', views.registrarpost, name="registrarpost"),
     path('Posts/edicionpost/<id>', views.edicionpost, name="edicionpost"),
     path('Posts/eliminarpost/<id>', views.eliminarpost, name="eliminarpost"),
     path('editarpost/', views.editarpost, name="editarpost"),

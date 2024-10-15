@@ -28,7 +28,7 @@
             <h2 class="title"> Gestion de Post </h2>
             <div class="card">
                 <div class="card-body">
-                    <form action="/registrarcategoria/" method="POST">{% csrf_token %}
+                    <form action="/registrarpost/" method="POST">{% csrf_token %}
                         <div class="card-item">
                             <label for="exampleFormControlInput1" class="form-label">Titulo</label>
                             <input type="text" id="txtTitulo" name="txtTitulo" class="form-control" placeholder="Titulo">
@@ -49,16 +49,15 @@
                             <label for="exampleFormControlInput1" class="form-label">URL Imagen</label>
                             <input type="text" id="txtImagen" name="txtImagen" class="form-control" placeholder="URL Imagen">
                         </div>
-                        <div class="card-item">
-                            <label for="exampleFormControlInput1" class="form-label">Categoria</label>
-                            <div class="dropdown">
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    {% for c in categoriaslistadas %}
-                                        <li><a class="dropdown-item">{{c.nombre}}</a></li>
-                                    {% endfor %}
-                                </ul>
+                            <div class="mb-3">
+                                <label for="categorias" class="form-label">Selecciona una categoría:</label>
+                                <select id="categorias" name="categoria" class="form-select">
+                                    <option value="">--Selecciona una opción--</option>
+                                        {% for c in categoriaslistadas %}
+                                            <option value="{{c.id}}">{{ c.nombre }}</option>
+                                        {% endfor %}
+                                </select>
                             </div>
-                        </div>
                         <div class="card-item">
                             <button type="submit" class="btn btn-success btn-block text-white"> Guardar </button>
                         </div>
