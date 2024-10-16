@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from .models import Categoria, Usuario, Post
+from .models import Categoria, Usuario, Post, Comentario
 from .forms import CustomUserCreationForm, CustomUserCreationForm2
 
 # Create your views here.
@@ -103,7 +103,21 @@ def tutoriales(request):
 
 def detallepost(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    return render(request, 'post.html', {'detallepost':post})
+    comentarioslistados = Comentario.objects.filter(post=post)
+    return render(request, 'post.html', {'detallepost':post, 'comentariosListados':comentarioslistados})
+
+def registrarcomentario(request, pk):
+
+    contenido=request.POST['txtContenido']
+    print(contenido)
+    autor = request.user
+    post = get_object_or_404(Post, id=pk)
+
+    comentario = Comentario.objects.create(contenido=contenido, autor=autor, post=post)
+
+    messages.success(request, 'Se ha registrado un comentario')
+
+    return redirect('post.html')
 
 def exit(request):
     logout(request)
