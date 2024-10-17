@@ -107,6 +107,8 @@ def detallepost(request, slug):
     comentarioslistados = Comentario.objects.filter(post=post)
     return render(request, 'post.html', {'detallepost':post, 'comentarioslistados':comentarioslistados})
 
+@login_required
+
 def registrarcomentario(request, pk):
     if request.method == "POST":
         contenido = request.POST.get('txtContenido', '')
@@ -124,11 +126,13 @@ def eliminarcomentario(request, id):
     
     comentario = Comentario.objects.get(id=id)
 
+    post = comentario.post
+
     comentario.delete()
 
     messages.success(request, 'Se ha eliminado el comentario seleccionado')
 
-    return redirect('detallepost')
+    return redirect('detallepost', slug=post.slug)
 
 def exit(request):
     logout(request)
@@ -217,7 +221,10 @@ def editarusuario(request):
 
     messages.success(request, 'Se ha editado con exito el usuario seleccionado')
 
-    return redirect('usuarios')
+    if request.user.is_superuser:
+        return redirect('usuarios')
+    else:
+        return redirect('inicio')
 
 def eliminarusuario(request, username):
     
