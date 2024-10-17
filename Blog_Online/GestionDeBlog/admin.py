@@ -26,3 +26,4 @@ class UsuarioAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 admin.site.register(Categoria, CategoriaAdmin)
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(Post)
+admin.site.register(Comentario)

@@ -45,6 +45,7 @@ urlpatterns = [
     path('Categorias/edicioncategoria/<id>', views.edicioncategoria, name="edicioncategoria"),
     path('Categorias/eliminarcategoria/<id>', views.eliminarcategoria, name="eliminarcategoria"),
     path('editarcategoria/', views.editarcategoria, name="editarcategoria"),
-    path('registrarcomentario/<pk>', views.registrarcomentario, name="registrarcomentario"),
+    path('registrarcomentario/<int:pk>/', views.registrarcomentario, name="registrarcomentario"),
     path('<slug:slug>/', views.detallepost, name='detallepost'),
+    path('eliminarcomentario/<id>/', views.eliminarcomentario, name='eliminarcomentario'),
 ]

@@ -23,7 +23,7 @@
             <h2> Comentarios</h2>
             <div class="card">
                 <div class="card-body">
-                    <form action="/registrarcomentario/{{detallepost.id}}" method="POST">{% csrf_token %}
+                    <form action="/registrarcomentario/{{detallepost.id}}/" method="POST">{% csrf_token %}
                         <div class="card-item">
                             <label for="exampleFormControlInput1" class="form-label">Contenido</label>
                             <input type="text" id="txtContenido" name="txtContenido" class="form-control" placeholder="Contenido">
@@ -55,8 +55,7 @@
                                 <td> {{forloop.counter}} </td>
                                 <td> {{c.contenido}} </td>
                                 <td> {{c.autor}} </td>
-                                <td><a href="edicionpost/{{ p.id }}"> <button class="btn btn-info"> Editar </button> </a></td>
-                                <td><a href="eliminarpost/{{ p.id }}"> <button class="btn btn-danger btnEliminar"> Eliminar </button> </a></td>
+                                <td><a href={% url 'eliminarcomentario' id=c.id %}> <button class="btn btn-danger btnEliminar"> Eliminar </button> </a></td>
                             </tr>
                         {% endfor %}
                     </tbody>

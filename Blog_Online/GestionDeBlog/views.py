@@ -10,6 +10,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from .models import Categoria, Usuario, Post, Comentario
 from .forms import CustomUserCreationForm, CustomUserCreationForm2
+from django.urls import reverse
 
 # Create your views here.
 
@@ -104,20 +105,30 @@ def tutoriales(request):
 def detallepost(request, slug):
     post = get_object_or_404(Post, slug=slug)
     comentarioslistados = Comentario.objects.filter(post=post)
-    return render(request, 'post.html', {'detallepost':post, 'comentariosListados':comentarioslistados})
+    return render(request, 'post.html', {'detallepost':post, 'comentarioslistados':comentarioslistados})
 
 def registrarcomentario(request, pk):
+    if request.method == "POST":
+        contenido = request.POST.get('txtContenido', '')
+        if contenido:
+            autor = request.user
+            post = get_object_or_404(Post, id=pk)
+            comentario = Comentario.objects.create(contenido=contenido, autor=autor, post=post)
+            messages.success(request, 'Se ha registrado un comentario')
+        else:
+            messages.error(request, 'El comentario no puede estar vacío')
 
-    contenido=request.POST['txtContenido']
-    print(contenido)
-    autor = request.user
-    post = get_object_or_404(Post, id=pk)
+    return redirect ('detallepost', slug=post.slug)
 
-    comentario = Comentario.objects.create(contenido=contenido, autor=autor, post=post)
+def eliminarcomentario(request, id):
+    
+    comentario = Comentario.objects.get(id=id)
 
-    messages.success(request, 'Se ha registrado un comentario')
+    comentario.delete()
 
-    return redirect('post.html')
+    messages.success(request, 'Se ha eliminado el comentario seleccionado')
+
+    return redirect('detallepost')
 
 def exit(request):
     logout(request)
