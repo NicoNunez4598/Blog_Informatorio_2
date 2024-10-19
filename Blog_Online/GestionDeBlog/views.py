@@ -42,65 +42,65 @@ def generales(request):
     post = paginator.get_page(page)
     return render(request, 'generales.html', {'post':post})
 
-def programacion(request):
+def realidadVirtual(request):
     queryset = request.GET.get("buscar")
-    post = Post.objects.filter(estado = True, categoria = Categoria.objects.get(nombre__iexact = 'Programacion'))
+    post = Post.objects.filter(estado = True, categoria = Categoria.objects.get(nombre__iexact = 'Realidad Virtual'))
     if queryset:
         post = Post.objects.filter(
             Q(titulo__icontains = queryset) |
             Q(descripcion__icontains = queryset),
             estado = True, 
-            categoria = Categoria.objects.get(nombre__iexact = 'Programacion')
+            categoria = Categoria.objects.get(nombre__iexact = 'Realidad Virtual')
         ).distinct()
     paginator = Paginator(post, 2)
     page = request.GET.get('page')
     post = paginator.get_page(page)
-    return render(request, 'programacion.html', {'post':post})
+    return render(request, 'realidadVirtual.html', {'post':post})
 
-def videojuegos(request):
+def realidadAumentada(request):
     queryset = request.GET.get("buscar")
-    post = Post.objects.filter(estado = True, categoria = Categoria.objects.get(nombre__iexact = 'Videojuegos'))
+    post = Post.objects.filter(estado = True, categoria = Categoria.objects.get(nombre__iexact = 'Realidad Aumentada'))
     if queryset:
         post = Post.objects.filter(
             Q(titulo__icontains = queryset) |
             Q(descripcion__icontains = queryset),
             estado = True, 
-            categoria = Categoria.objects.get(nombre__iexact = 'Videojuegos')
+            categoria = Categoria.objects.get(nombre__iexact = 'Realidad Aumentada')
         ).distinct()
     paginator = Paginator(post, 2)
     page = request.GET.get('page')
     post = paginator.get_page(page)
-    return render(request, 'videojuegos.html', {'post':post})
+    return render(request, 'realidadAumentada.html', {'post':post})
 
-def tecnologia(request):
+def educacionAmbiental(request):
     queryset = request.GET.get("buscar")
-    post = Post.objects.filter(estado = True, categoria = Categoria.objects.get(nombre__iexact = 'Tecnologia'))
+    post = Post.objects.filter(estado = True, categoria = Categoria.objects.get(nombre__iexact = 'Educacion Ambiental'))
     if queryset:
         post = Post.objects.filter(
             Q(titulo__icontains = queryset) |
             Q(descripcion__icontains = queryset),
             estado = True, 
-            categoria = Categoria.objects.get(nombre__iexact = 'Tecnologia')
+            categoria = Categoria.objects.get(nombre__iexact = 'Educacion Ambiental')
         ).distinct()
     paginator = Paginator(post, 2)
     page = request.GET.get('page')
     post = paginator.get_page(page)
-    return render(request, 'tecnologia.html', {'post':post})
+    return render(request, 'educacionAmbiental.html', {'post':post})
 
-def tutoriales(request):
+def rvyraenea(request):
     queryset = request.GET.get("buscar")
-    post = Post.objects.filter(estado = True, categoria = Categoria.objects.get(nombre__iexact = 'Tutoriales'))
+    post = Post.objects.filter(estado = True, categoria = Categoria.objects.get(nombre__iexact = 'Realidad Virtual y Realidad Aumentada en Educacion Ambiental'))
     if queryset:
         post = Post.objects.filter(
             Q(titulo__icontains = queryset) |
             Q(descripcion__icontains = queryset),
             estado = True, 
-            categoria = Categoria.objects.get(nombre__iexact = 'Tutoriales')
+            categoria = Categoria.objects.get(nombre__iexact = 'Realidad Virtual y Realidad Aumentada en Educacion Ambiental')
         ).distinct()
     paginator = Paginator(post, 2)
     page = request.GET.get('page')
     post = paginator.get_page(page)
-    return render(request, 'tutoriales.html', {'post':post})
+    return render(request, 'rvyraenea.html', {'post':post})
 
 def detallepost(request, slug):
     post = get_object_or_404(Post, slug=slug)
