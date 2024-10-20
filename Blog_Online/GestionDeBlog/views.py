@@ -1,3 +1,5 @@
+import smtplib
+from typing import Any
 from django.shortcuts import render, redirect
 from .models import Post, Categoria
 from django.shortcuts import get_object_or_404
@@ -9,8 +11,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from .models import Categoria, Usuario, Post, Comentario
-from .forms import CustomUserCreationForm, CustomUserCreationForm2
+from .forms import CustomUserCreationForm, CustomUserCreationForm2, ResetPasswordForm
 from django.urls import reverse
+from django.views.generic import FormView
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from django.template.loader import render_to_string
 
 # Create your views here.
 
