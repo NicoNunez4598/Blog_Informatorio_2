@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from GestionDeBlog import views
 from django.contrib.auth import views as auth_views
+from GestionDeBlog.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,10 +26,10 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls'), name="login"),
     path('logout/', views.exit, name="exit"),
     path('register/', views.register, name='register'),
-    path('resetPassword/', auth_views.PasswordResetView.as_view(template_name='registration/resetPassword.html'), name='resetPassword'),
-    path('resetPasswordSend/', auth_views.PasswordResetDoneView.as_view(template_name='registration/passwordDone.html'), name='resetPasswordSend'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='registration/passwordConfirm.html'), name='resetPasswordConfirm'),
-    path('resetPasswordComplete/', auth_views.PasswordResetCompleteView.as_view(), name='resetPasswordComplete'),
+    path('resetPassword/', ResetPassword.as_view(), name='resetPassword'),
+    path('resetPasswordSend/', ResetPasswordDone.as_view(), name='resetPasswordDone'),
+    path('reset/<uidb64>/<token>/', ResetPasswordConfirm.as_view(), name='resetPasswordConfirm'),
+    path('resetPasswordComplete/', ResetPasswordComplete.as_view(), name='resetPasswordComplete'),
     path('generales/', views.generales, name='generales'),
     path('rvyraenea/', views.rvyraenea, name='rvyraenea'),
     path('educacionAmbiental/', views.educacionAmbiental, name='educacionAmbiental'),

@@ -17,6 +17,7 @@ from django.views.generic import FormView
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from django.template.loader import render_to_string
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 # Create your views here.
 
@@ -318,3 +319,15 @@ def register(request):
             login(request, user)
             return redirect('inicio')
     return render(request, 'registration/register.html', data)
+
+class ResetPassword(PasswordResetView):
+    template_name = 'registration/resetPassword.html'
+
+class ResetPasswordDone(PasswordResetDoneView):
+    template_name = 'registration/passwordDone.html'
+
+class ResetPasswordConfirm(PasswordResetConfirmView):
+    template_name = 'registration/passwordConfirm.html'
+
+class ResetPasswordComplete(PasswordResetCompleteView):
+    template_name = 'registration/passwordComplete.html'
